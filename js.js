@@ -1,17 +1,22 @@
 // const btn=document.getElementsByClassName(".btn");
 
-const apiUrl = "https://api.quotable.io/quotes/random";
+/* const apiUrl = "https://api.quotable.io/quotes/random";
 
 async function fetchRandomQuote(url) {
   const response = await fetch(url);
   var data = await response.json();
   console.log(data);
-  document.querySelector(".quote").textContent = data.content;
+  // document.querySelector(".quote").textContent = 'Holla';
   document.getElementById(".author").textContent = data.author;
 }
 
 fetchRandomQuote(apiUrl);
-
+ */
+document
+  .querySelector(".generate-quote")
+  .addEventListener("click", function () {
+    document.querySelector(".quote").textContent = "Holla";
+  });
 //   try {
 //     const response = await fetch(apiUrl);
 //     if (!response.ok) {

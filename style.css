@@ -50,7 +50,7 @@ body {
 
 .quote-box blockquote::after,
 .quote-box blockquote::before {
-  content: '"';
+  content: ' " ';
 }
 
 .quote-box .author {
