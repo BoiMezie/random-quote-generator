@@ -8,19 +8,56 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-      rel="stylesheet"/>
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="quote-box">
       <h1>Quote Of The Day</h1>
-      <blockquote class="quote">
-        Loading...
-      </blockquote>
+      <blockquote class="quote">Loading...</blockquote>
       <span class="author" id="quote">Loading...</span> <br />
       <div class="button">
         <button class="generate-quote">Generate Quote</button>
-        <button class="Share">Share</button>
+        <button class="share show-modal">
+          <span><i class="fa-solid fa-share-nodes"></i></span>
+        </button>
+      </div>
+      <div class="modal hidden">
+        <span class="close-modal">&times;</span>
+        <!-- <p>Share this quote on:</p> -->
+        <div class="share-wrapper">
+
+          <div id="shareMenu" class="share-menu">
+            <a id="twitterShare" target="_blank" aria-label="Share on X">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+
+            <a
+              id="whatsappShare"
+              target="_blank"
+              aria-label="Share on WhatsApp"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+
+            <a
+              id="facebookShare"
+              target="_blank"
+              aria-label="Share on Facebook"
+            >
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <button id="copyQuote" aria-label="Copy quote">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
