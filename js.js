@@ -1,4 +1,4 @@
-// const btn=document.getElementsByClassName(".btn");
+// Function to fetch the quote 
 
 const apiUrl = "https://api.quotable.io/quotes/random";
 
@@ -24,6 +24,7 @@ document
 
 fetchRandomQuote(apiUrl);
 
+//Function to hide and show modal, and link to the share button 
 const modal = document.querySelector(".modal");
 // const overlay = document.querySelector('.overlay');
 const buttonCloseModal = document.querySelector(".close-modal");
@@ -56,3 +57,10 @@ document.addEventListener("keydown", function (e) {
     return closeModal();
   }
 });
+
+// Getting the share buttons from the DOM
+const twitterShare = document.getElementById('twitterShare');
+const facebookShare = document.getElementById('facebookShare');
+const whatsappShare = document.getElementById('whatsappShare');
+const copyQuote = document.getElementById('copyQuote');
+
