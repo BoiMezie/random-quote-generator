@@ -103,7 +103,7 @@ body {
   /* text-decoration-color: rgb(0, 183, 255); */
 }
 
-.quote-box .button button:hover {
+.quote-box .button button:active {
   background-color: rgb(23, 124, 229);
   border: 2px solid rgb(0, 183, 255);
   transform: scale(90%);

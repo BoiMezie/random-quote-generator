@@ -64,3 +64,41 @@ const facebookShare = document.getElementById('facebookShare');
 const whatsappShare = document.getElementById('whatsappShare');
 const copyQuote = document.getElementById('copyQuote');
 
+function getQuoteText() {
+  const quoteText = document.querySelector('.quote').innerText;
+  const quoteAuthor = document.querySelector('.author').innerText;
+  return `Today's quote:
+"${quoteText}"  
+~ ${quoteAuthor}`;
+}
+
+// Event listener for Twitter share button
+twitterShare.addEventListener('click', function() {
+  const quote = getQuoteText();
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote)}`;
+  window.open(twitterUrl, '_blank');
+});
+
+// Event listener for Facebook share button
+facebookShare.addEventListener('click', function() {
+  const quote = getQuoteText();
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=&quote=${encodeURIComponent(quote)}`;
+  window.open(facebookUrl, '_blank');
+});
+
+// Event listener for WhatsApp share button
+whatsappShare.addEventListener('click', function() {
+  const quote = getQuoteText();
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(quote)}`;
+  window.open(whatsappUrl, '_blank');
+});
+
+// Event listener for Copy Quote button
+copyQuote.addEventListener('click', function() {
+  const quote = getQuoteText();
+  navigator.clipboard.writeText(quote).then(function() {
+    alert('Quote copied to clipboard!');
+  }, function(err) {
+    console.error('Could not copy text: ', err);
+  });
+});
