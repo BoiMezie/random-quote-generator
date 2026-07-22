@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,35 +16,63 @@
     />
     <!-- SEO Tags -->
     <link rel="stylesheet" href="style.css" />
-    <meta name="title" content="Random Quote Generator | Random Quote Generator">
-<meta name="description" content="A simple web app that generates random quotes.">
-<meta name="keywords" content="Quote, Random, Generator, HTML5, CSS, JavaScript">
-<meta name="robots" content="index, follow">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="language" content="English">
-<meta name="revisit-after" content="1 days">
-<meta name="author" content="BoiMezie">
+    <meta
+      name="title"
+      content="Random Quote Generator | Random Quote Generator"
+    />
+    <meta
+      name="description"
+      content="A simple web app that generates random quotes."
+    />
+    <meta
+      name="keywords"
+      content="Quote, Random, Generator, HTML5, CSS, JavaScript"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="author" content="BoiMezie" />
 
     <!-- Open Graph for Facebook/LinkedIn -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://boimezie.github.io/random-quote-generator/" />
-<meta property="og:title" content="Random Quote Generator | Random Quote Generator" />
-<meta property="og:description" content="A simple web app that generates random quotes." />
-<meta property="og:image" content="None" />
-<meta property="og:logo" content="None" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://boimezie.github.io/random-quote-generator/"
+    />
+    <meta
+      property="og:title"
+      content="Random Quote Generator | Random Quote Generator"
+    />
+    <meta
+      property="og:description"
+      content="A simple web app that generates random quotes."
+    />
+    <meta property="og:image" content="None" />
+    <meta property="og:logo" content="None" />
 
     <!-- Twitter Cards -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://boimezie.github.io/random-quote-generator/" />
-<meta property="twitter:title" content="Random Quote Generator | Random Quote Generator" />
-<meta property="twitter:description" content="A simple web app that generates random quotes." />
-<meta property="twitter:image" content="None" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://boimezie.github.io/random-quote-generator/"
+    />
+    <meta
+      property="twitter:title"
+      content="Random Quote Generator | Random Quote Generator"
+    />
+    <meta
+      property="twitter:description"
+      content="A simple web app that generates random quotes."
+    />
+    <meta property="twitter:image" content="None" />
   </head>
   <body>
     <div class="quote-box">
       <h1>Quote Of The Day</h1>
-      <blockquote class="quote">Loading...</blockquote>
-      <span class="author" id="quote">Loading...</span> <br />
+      <blockquote class="quote"></blockquote>
+      <div class="spinner hidden" aria-hidden="true"></div>
+      <span class="author" id="quote"></span> <br />
       <div class="button">
         <button class="generate-quote">Generate Quote</button>
         <button class="share show-modal">
@@ -55,7 +83,9 @@
         </button>
       </div>
       <div class="modal hidden">
-        <button class="close-modal" aria-label="Close share menu">&times;</button>
+        <button class="close-modal" aria-label="Close share menu">
+          &times;
+        </button>
         <!-- <p>Share this quote on:</p> -->
 
         <div id="shareMenu" class="share-menu">

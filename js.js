@@ -1,30 +1,134 @@
-// Function to fetch the quote 
+// Quote generator with online-first and offline fallback.
 
-const apiUrl = "https://api.quotable.io/quotes/random";
+const quoteElement = document.querySelector(".quote");
+const authorElement = document.querySelector(".author");
+const generateButton = document.querySelector(".generate-quote");
+const spinnerElement = document.querySelector(".spinner");
 
-async function fetchRandomQuote(url) {
+let localQuotes = [];
+let lastQuoteIndex = -1;
+
+function showSpinner() {
+  spinnerElement.classList.remove("hidden");
+  generateButton.disabled = true;
+}
+
+function hideSpinner() {
+  spinnerElement.classList.add("hidden");
+  generateButton.disabled = false;
+}
+
+function displayQuote(quoteData) {
+  quoteElement.textContent = quoteData.quote;
+  authorElement.textContent = quoteData.author;
+}
+
+async function loadLocalQuotes() {
+  if (localQuotes.length > 0) {
+    return localQuotes;
+  }
+
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch("quotes.json");
+    if (!response.ok) {
+      throw new Error(`Could not load quotes.json (${response.status})`);
+    }
+
     const data = await response.json();
+    localQuotes = Array.isArray(data) ? data : [];
 
-    //API returns an array
-    const quote = data[0];
+    if (localQuotes.length === 0) {
+      throw new Error("quotes.json did not contain any quotes");
+    }
 
-    document.querySelector(".quote").textContent = data[0].content;
-    document.querySelector(".author").textContent = data[0].author;
-    // console.log(data);
+    return localQuotes;
   } catch (error) {
-    console.error("There has been a problem with your fetch operation:", error);
+    console.warn("Offline quote database could not be loaded:", error);
+    return [];
   }
 }
 
-document
-  .querySelector(".generate-quote")
-  .addEventListener("click", fetchRandomQuote);
+function getRandomLocalQuote() {
+  if (localQuotes.length === 0) {
+    return {
+      quote: "A journey of a thousand miles begins with a single step.",
+      author: "Lao Tzu",
+    };
+  }
 
-fetchRandomQuote(apiUrl);
+  let nextIndex = Math.floor(Math.random() * localQuotes.length);
 
-//Function to hide and show modal, and link to the share button 
+  if (localQuotes.length > 1 && nextIndex === lastQuoteIndex) {
+    nextIndex = (nextIndex + 1) % localQuotes.length;
+  }
+
+  lastQuoteIndex = nextIndex;
+  return localQuotes[nextIndex];
+}
+
+async function fetchOnlineQuote() {
+  const endpoints = [
+    "https://api.quotable.io/random",
+    "https://api.adviceslip.com/advice",
+  ];
+
+  for (const url of endpoints) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const data = await response.json();
+
+      if (url.includes("quotable")) {
+        const quote = data?.content?.trim();
+        const author = data?.author?.trim();
+        if (quote && author) {
+          return { quote, author };
+        }
+      }
+
+      if (url.includes("adviceslip")) {
+        const quote = data?.slip?.advice?.trim();
+        if (quote) {
+          return { quote, author: "Advice" };
+        }
+      }
+    } catch (error) {
+      // Silently fall back to the offline database when an online source fails.
+    }
+  }
+
+  return null;
+}
+
+async function generateQuote() {
+  showSpinner();
+
+  try {
+    await loadLocalQuotes();
+    const onlineQuote = await fetchOnlineQuote();
+    const quoteToDisplay = onlineQuote || getRandomLocalQuote();
+    displayQuote(quoteToDisplay);
+  } catch (error) {
+    console.warn("Unable to generate a quote right now:", error);
+    displayQuote(getRandomLocalQuote());
+  } finally {
+    hideSpinner();
+  }
+}
+
+generateButton.addEventListener("click", generateQuote);
+
+// Load local quotes once, then display the first quote.
+generateQuote();
+
+// Function to hide and show modal, and link to the share button
 const modal = document.querySelector(".modal");
 // const overlay = document.querySelector('.overlay');
 const buttonCloseModal = document.querySelector(".close-modal");
@@ -51,54 +155,56 @@ buttonCloseModal.addEventListener("click", closeModal);
 // overlay.addEventListener('click', closeModal);
 
 document.addEventListener("keydown", function (e) {
-  console.log(e.key);
-
   if (e.key === "Escape") {
-    return closeModal();
+    closeModal();
   }
 });
 
 // Getting the share buttons from the DOM
-const twitterShare = document.getElementById('twitterShare');
-const facebookShare = document.getElementById('facebookShare');
-const whatsappShare = document.getElementById('whatsappShare');
-const copyQuote = document.getElementById('copyQuote');
+const twitterShare = document.getElementById("twitterShare");
+const facebookShare = document.getElementById("facebookShare");
+const whatsappShare = document.getElementById("whatsappShare");
+const copyQuote = document.getElementById("copyQuote");
 
+// Getting the quote content from the DOM
 function getQuoteText() {
-  const quoteText = document.querySelector('.quote').innerText;
-  const quoteAuthor = document.querySelector('.author').innerText;
+  const quoteText = document.querySelector(".quote").innerText;
+  const quoteAuthor = document.querySelector(".author").innerText;
   return `Today's quote:
 "${quoteText}"  
 ~ ${quoteAuthor}`;
 }
 
 // Event listener for Twitter share button
-twitterShare.addEventListener('click', function() {
+twitterShare.addEventListener("click", function () {
   const quote = getQuoteText();
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote)}`;
-  window.open(twitterUrl, '_blank');
+  window.open(twitterUrl, "_blank");
 });
 
 // Event listener for Facebook share button
-facebookShare.addEventListener('click', function() {
+facebookShare.addEventListener("click", function () {
   const quote = getQuoteText();
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=&quote=${encodeURIComponent(quote)}`;
-  window.open(facebookUrl, '_blank');
+  window.open(facebookUrl, "_blank");
 });
 
 // Event listener for WhatsApp share button
-whatsappShare.addEventListener('click', function() {
+whatsappShare.addEventListener("click", function () {
   const quote = getQuoteText();
   const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(quote)}`;
-  window.open(whatsappUrl, '_blank');
+  window.open(whatsappUrl, "_blank");
 });
 
 // Event listener for Copy Quote button
-copyQuote.addEventListener('click', function() {
+copyQuote.addEventListener("click", function () {
   const quote = getQuoteText();
-  navigator.clipboard.writeText(quote).then(function() {
-    alert('Quote copied to clipboard!');
-  }, function(err) {
-    console.error('Could not copy text: ', err);
-  });
+  navigator.clipboard.writeText(quote).then(
+    function () {
+      alert("Quote copied to clipboard!");
+    },
+    function (err) {
+      console.error("Could not copy text: ", err);
+    },
+  );
 });
