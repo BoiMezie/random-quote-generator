@@ -34,8 +34,7 @@ git clone https://github.com/BoiMezie/random-quote-generator.git
 ```
 
 2. Open the project folder
-3. 
-4. Launch `index.html`
+3. Launch `index.html`
 
 ## 📸 Screenshots
 
