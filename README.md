@@ -37,6 +37,9 @@ git clone https://github.com/BoiMezie/random-quote-generator.git
 3. Launch `index.html`
 
 ## 📸 Screenshots
+<img width="897" height="830" alt="quote-landing-page" src="https://github.com/user-attachments/assets/0768f302-110f-4e02-b18d-069a0e540bc0" />
+<img width="897" height="830" alt="generated-quote-and-share-menu" src="https://github.com/user-attachments/assets/7f1e12a6-1868-46e1-9135-8cf3c6350abd" />
+
 
 ## 📚 Lessons Learned
 
@@ -45,7 +48,7 @@ This project strengthened my understanding of:
 - Async/Await
 - Promise handling
 - Error handling
-- Fallback strategies
+- Fallback strategiese
 - API integration
 - DOM manipulation
 -  Clipboard API
